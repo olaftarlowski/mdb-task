@@ -16,7 +16,7 @@ const InitialWrapper = styled.div`
 
 const App = () => {
   const [fullList, setFullList] = useState([]);
-  console.log(fullList);
+  // console.log(fullList);
 
   const addNewListItemHandler = (props) => {
     setFullList((prevState) => {
@@ -26,8 +26,8 @@ const App = () => {
 
   return (
     <InitialWrapper>
-      <AddNewItem dataList={fullList} addNewItem={addNewListItemHandler} />
-      <FullList />
+      <AddNewItem addNewItem={addNewListItemHandler} />
+      <FullList dataList={fullList} />
     </InitialWrapper>
   );
 };
