@@ -25,7 +25,7 @@ const getLocalStorage = () => {
 
 const App = () => {
   const [fullList, setFullList] = useState(getLocalStorage());
-  console.log(fullList);
+  // console.log(fullList);
 
   useEffect(() => {
     localStorage.setItem("dataList", JSON.stringify(fullList));
@@ -39,8 +39,8 @@ const App = () => {
 
   return (
     <InitialWrapper>
-      <AddNewItem dataList={fullList} addNewItem={addNewListItemHandler} />
-      <FullList />
+      <AddNewItem addNewItem={addNewListItemHandler} />
+      <FullList dataList={fullList} />
     </InitialWrapper>
   );
 };
