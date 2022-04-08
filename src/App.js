@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddNewItem from "./components/AddNewItem/AddNewItem";
 import FullList from "./components/FullList/FullList";
@@ -14,9 +14,22 @@ const InitialWrapper = styled.div`
   color: white;
 `;
 
+const getLocalStorage = () => {
+  let list = localStorage.getItem("dataList");
+  if (list) {
+    return (list = JSON.parse(localStorage.getItem("dataList")));
+  } else {
+    return [];
+  }
+};
+
 const App = () => {
-  const [fullList, setFullList] = useState([]);
+  const [fullList, setFullList] = useState(getLocalStorage());
   console.log(fullList);
+
+  useEffect(() => {
+    localStorage.setItem("dataList", JSON.stringify(fullList));
+  }, [fullList]);
 
   const addNewListItemHandler = (props) => {
     setFullList((prevState) => {
