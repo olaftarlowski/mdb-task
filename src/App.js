@@ -37,10 +37,17 @@ const App = () => {
     });
   };
 
+  const deleteItemHandler = (itemId) => {
+    setFullList((currentList) => {
+      const updatedList = currentList.filter((item) => item.id !== itemId);
+      return updatedList;
+    });
+  };
+
   return (
     <InitialWrapper>
       <AddNewItem addNewItem={addNewListItemHandler} />
-      <FullList dataList={fullList} />
+      <FullList dataList={fullList} deleteItem={deleteItemHandler} />
     </InitialWrapper>
   );
 };

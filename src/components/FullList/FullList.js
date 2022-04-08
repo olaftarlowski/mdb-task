@@ -39,7 +39,7 @@ const FullList = (props) => {
         <tbody>
           {props.dataList.map((item, index) => {
             return (
-              <tr key={index}>
+              <tr key={index} onClick={() => props.deleteItem(item.id)}>
                 <td>{index}</td>
                 <td>{item.name}</td>
                 <td>{item.desc}</td>
