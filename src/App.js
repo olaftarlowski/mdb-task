@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddNewItem from "./components/AddNewItem/AddNewItem";
 import FullList from "./components/FullList/FullList";
+import SideMenu from "./components/SideMenu/SideMenu";
 
 const InitialWrapper = styled.div`
   text-align: center;
@@ -12,6 +13,17 @@ const InitialWrapper = styled.div`
   align-items: center;
   font-size: 1.6em;
   color: white;
+
+  p {
+    display: inline-block;
+    margin: 0;
+  }
+`;
+const MainContentWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
 `;
 
 const getLocalStorage = () => {
@@ -26,7 +38,12 @@ const getLocalStorage = () => {
 const App = () => {
   const [fullList, setFullList] = useState(getLocalStorage());
   const [totalPrice, setTotalPrice] = useState(0);
-  // console.log(fullList);
+  const [
+    categoriesList,
+    //  setCategoriesList
+  ] = useState(["all", "component", "software", "device", "other"]);
+  const [activeCategories, setActiveCategories] = useState(["all"]);
+
   const countTotalPrice = (arr) =>
     arr.reduce(
       (previousValue, currentValue) => previousValue + +currentValue.price,
@@ -51,6 +68,39 @@ const App = () => {
     });
   };
 
+  const filterCheckbox = (checkbox) => {
+    if (checkbox === "all") {
+      setActiveCategories(["all"]);
+    }
+    if (activeCategories.includes(checkbox)) {
+      setActiveCategories((currentList) => {
+        const updatedList = currentList.filter(
+          (item) => item.toLowerCase() !== checkbox
+        );
+        if (updatedList.length === 0) {
+          setActiveCategories(["all"]);
+        } else {
+          return updatedList;
+        }
+        return updatedList;
+      });
+    } else {
+      setActiveCategories((prevState) => {
+        return [
+          ...prevState.filter((item) => item !== "all"),
+          checkbox.toLowerCase(),
+        ];
+      });
+    }
+  };
+
+  const filterFullList = fullList.filter((el) => {
+    if (activeCategories.includes("all")) {
+      return el;
+    }
+    return activeCategories.includes(el.category);
+  });
+
   return (
     <InitialWrapper>
       <div>
@@ -59,8 +109,18 @@ const App = () => {
           Total {fullList.length} {fullList.length > 1 ? "items" : "item"}
         </p>
       </div>
-      <AddNewItem addNewItem={addNewListItemHandler} />
-      <FullList dataList={fullList} deleteItem={deleteItemHandler} />
+      <AddNewItem
+        addNewItem={addNewListItemHandler}
+        categories={categoriesList}
+      />
+      <MainContentWrapper>
+        <FullList dataList={filterFullList} deleteItem={deleteItemHandler} />
+        <SideMenu
+          checkStatus={activeCategories}
+          categoriesList={categoriesList}
+          filterCheckbox={filterCheckbox}
+        />
+      </MainContentWrapper>
     </InitialWrapper>
   );
 };

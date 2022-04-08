@@ -30,10 +30,7 @@ const AddNewItem = (props) => {
   const [price, setPrice] = useState(0);
   const [symbolsArr] = useState(["e", "E", "+", "-"]);
 
-  const [
-    categoriesList,
-    //  setCategoriesList
-  ] = useState(["all", "component", "software", "device", "other"]);
+  
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -82,7 +79,7 @@ const AddNewItem = (props) => {
         value={category}
         onChange={(e) => setCategory(e.target.value)}
       >
-        {categoriesList.slice(1).map((option, index) => (
+        {props.categories.slice(1).map((option, index) => (
           <option key={index} value={option}>
             {option}
           </option>
