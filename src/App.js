@@ -25,10 +25,17 @@ const getLocalStorage = () => {
 
 const App = () => {
   const [fullList, setFullList] = useState(getLocalStorage());
+  const [totalPrice, setTotalPrice] = useState(0);
   // console.log(fullList);
+  const countTotalPrice = (arr) =>
+    arr.reduce(
+      (previousValue, currentValue) => previousValue + +currentValue.price,
+      0
+    );
 
   useEffect(() => {
     localStorage.setItem("dataList", JSON.stringify(fullList));
+    setTotalPrice(countTotalPrice(fullList).toFixed(2));
   }, [fullList]);
 
   const addNewListItemHandler = (props) => {
@@ -46,6 +53,12 @@ const App = () => {
 
   return (
     <InitialWrapper>
+      <div>
+        <p>Total price: {totalPrice}$</p>
+        <p>
+          Total {fullList.length} {fullList.length > 1 ? "items" : "item"}
+        </p>
+      </div>
       <AddNewItem addNewItem={addNewListItemHandler} />
       <FullList dataList={fullList} deleteItem={deleteItemHandler} />
     </InitialWrapper>
