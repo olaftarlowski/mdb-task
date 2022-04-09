@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddNewItem from "./components/AddNewItem/AddNewItem";
-import EditNewItem from "./components/EditNewItem/EditNewItem";
+import EditItem from "./components/EditItem/EditItem";
 import FullList from "./components/FullList/FullList";
 import SideMenu from "./components/SideMenu/SideMenu";
 
@@ -112,32 +112,33 @@ const App = () => {
 
   // EDITHANDLER2
   const [isEditing, setIsEditing] = useState(false);
-  const [currentTodo, setCurrentTodo] = useState({});
+  const [editedItem, setEditedItem] = useState({});
 
-  function handleEditInputChange(e) {
-    // console.log(e.target);
-    setCurrentTodo({ ...currentTodo, name: e.target.value });
-    // console.log(currentTodo);
-  }
+  // function handleEditInputChange(e) {
+  //   // console.log(e.target);
+  //   setEditedItem({ ...editedItem, name: e.target.value });
+  //   // console.log(editedItem);
+  // }
 
-  function handleEditClick(todo) {
+  // this goes to the FullList compo
+  function handleEditClick(item) {
     setIsEditing(true);
-    setCurrentTodo({ ...todo });
+    setEditedItem({ ...item });
   }
 
-  function handleUpdateTodo(id, updatedTodo) {
-    const updatedItem = fullList.map((todo) => {
-      return todo.id === id ? updatedTodo : todo;
-    });
-    setIsEditing(false);
-    setFullList(updatedItem);
-  }
+  // function handleUpdateItem(id, editItem) {
+  //   const updatedItem = fullList.map((item) => {
+  //     return item.id === id ? editItem : item;
+  //   });
+  //   setIsEditing(false);
+  //   setFullList(updatedItem);
+  // }
 
-  function handleEditFormSubmit(e) {
-    handleUpdateTodo(currentTodo.id, currentTodo);
-  }
+  // function handleEditFormSubmit() {
+  //   handleUpdateItem(editedItem.id, editedItem);
+  // }
 
-  // console.log(currentTodo);
+  // console.log(editedItem);
 
   return (
     <InitialWrapper>
@@ -148,10 +149,12 @@ const App = () => {
         </p>
       </div>
       {isEditing ? (
-        <EditNewItem
-          handleEditInputChange={handleEditInputChange}
-          currentTodo={currentTodo}
-          handleEditFormSubmit={handleEditFormSubmit}
+        <EditItem
+          setNewEditedItem={setEditedItem}
+          setEditing={setIsEditing}
+          setFullList={setFullList}
+          fullList={fullList}
+          editedItem={editedItem}
           categories={categoriesList}
         />
       ) : (

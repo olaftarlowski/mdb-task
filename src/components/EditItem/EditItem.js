@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { v4 as uuid } from "uuid";
+// import { v4 as uuid } from "uuid";
 import styled from "styled-components";
 
 const FormWrap = styled.form`
@@ -35,46 +35,59 @@ const FormWrap = styled.form`
   }
 `;
 
-const EditNewItem = (props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("component");
-  const [price, setPrice] = useState(0);
-  const [symbolsArr] = useState(["e", "E", "+", "-"]);
+const EditItem = (props) => {
+  // const [title, setTitle] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [category, setCategory] = useState("component");
+  // const [price, setPrice] = useState(0);
+  // const [symbolsArr] = useState(["e", "E", "+", "-"]);
 
-  const submitEditHandler = (e) => {
-    e.preventDefault();
-    // const newListItem = {
-    //   id: uuid(),
-    //   name: title,
-    //   desc: description,
-    //   category: category,
-    //   price: price,
-    // };
-    props.handleEditFormSubmit();
+  // const submitEditHandler = (e) => {
+  //   e.preventDefault();
+  //   // const newListItem = {
+  //   //   id: uuid(),
+  //   //   name: title,
+  //   //   desc: description,
+  //   //   category: category,
+  //   //   price: price,
+  //   // };
+  //   props.handleEditFormSubmit();
+  // };
+  const [currentItem, setCurrentItem] = useState({ ...props.editedItem });
+
+  const handleEditInputChange = (e) => {
+    // console.log(e.target);
+    const updatedEditInput = { ...currentItem, name: e.target.value };
+    setCurrentItem(updatedEditInput);
+    // console.log(currentItem);
+    props.setNewEditedItem(updatedEditInput);
   };
 
-  // const resetInput = (e) => {
-  //   if (price === 0) {
-  //     e.target.value = "";
-  //   }
-  // };
+  function handleUpdateItem(id, editItem) {
+    const updatedItem = props.fullList.map((item) => {
+      return item.id === id ? editItem : item;
+    });
+    props.setEditing(false);
+    props.setFullList(updatedItem);
+  }
+  function handleEditFormSubmit(e) {
+    e.preventDefault();
+    handleUpdateItem(currentItem.id, currentItem);
+  }
 
-  //   EDIT
-
-  //   const [currentTodo, setCurrentTodo] = useState({});
+  // console.log(currentItem);
 
   return (
-    <FormWrap onSubmit={submitEditHandler}>
+    <FormWrap onSubmit={handleEditFormSubmit}>
       <div>
-        <label htmlFor="title">edit Item name:</label>
+        <label htmlFor="editTitle">Enter new name:</label>
         <input
-          placeholder="Enter title..."
-          id="title"
+          placeholder="Enter new title..."
+          id="editTitle"
           type="text"
           required
-          value={props.currentTodo.name}
-          onChange={props.handleEditInputChange}
+          value={props.editedItem.name}
+          onChange={handleEditInputChange}
         />
         {/* <label htmlFor="description">edit Item description:</label>
         <textarea
@@ -118,4 +131,4 @@ const EditNewItem = (props) => {
   );
 };
 
-export default EditNewItem;
+export default EditItem;
