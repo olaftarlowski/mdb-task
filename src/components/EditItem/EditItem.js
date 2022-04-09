@@ -7,8 +7,15 @@ const FormWrap = styled.form`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 24px;
+  .buttons-container {
+    width: 236px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
   div {
-    padding: 16px;
+    padding: 16px 16px 0 16px;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -40,7 +47,7 @@ const EditItem = (props) => {
   // const [description, setDescription] = useState("");
   // const [category, setCategory] = useState("component");
   // const [price, setPrice] = useState(0);
-  // const [symbolsArr] = useState(["e", "E", "+", "-"]);
+  const [symbolsArr] = useState(["e", "E", "+", "-"]);
 
   // const submitEditHandler = (e) => {
   //   e.preventDefault();
@@ -55,12 +62,34 @@ const EditItem = (props) => {
   // };
   const [currentItem, setCurrentItem] = useState({ ...props.editedItem });
 
-  const handleEditInputChange = (e) => {
-    // console.log(e.target);
-    const updatedEditInput = { ...currentItem, name: e.target.value };
+  const [newTitle, setNewTitle] = useState(currentItem.name);
+  const [newDesc, setNewDesc] = useState(currentItem.desc);
+  const [newPrice, setNewPrice] = useState(currentItem.price);
+  const [newCategory, setNewCategory] = useState(currentItem.category);
+
+  const nameHandler = (e) => {
+    const updatedTitle = e.target.value;
+    setNewTitle(updatedTitle);
+    const updatedEditInput = { ...currentItem, name: updatedTitle };
     setCurrentItem(updatedEditInput);
-    // console.log(currentItem);
-    props.setNewEditedItem(updatedEditInput);
+  };
+  const descHandler = (e) => {
+    const updatedDesc = e.target.value;
+    setNewDesc(updatedDesc);
+    const updatedEditInput = { ...currentItem, desc: updatedDesc };
+    setCurrentItem(updatedEditInput);
+  };
+  const priceHandler = (e) => {
+    const updatedPrice = +e.target.value;
+    setNewPrice(updatedPrice);
+    const updatedEditInput = { ...currentItem, price: updatedPrice };
+    setCurrentItem(updatedEditInput);
+  };
+  const categoryHandler = (e) => {
+    const updatedCategory = e.target.value;
+    setNewCategory(updatedCategory);
+    const updatedEditInput = { ...currentItem, category: updatedCategory };
+    setCurrentItem(updatedEditInput);
   };
 
   function handleUpdateItem(id, editItem) {
@@ -70,62 +99,74 @@ const EditItem = (props) => {
     props.setEditing(false);
     props.setFullList(updatedItem);
   }
+
+  const cancelEditHandler = (e) => {
+    e.preventDefault();
+    props.setEditing(false);
+  };
+
   function handleEditFormSubmit(e) {
     e.preventDefault();
     handleUpdateItem(currentItem.id, currentItem);
   }
-
-  // console.log(currentItem);
+  const resetInput = (e) => {
+    if (newPrice === 0) {
+      e.target.value = "";
+    }
+  };
 
   return (
     <FormWrap onSubmit={handleEditFormSubmit}>
       <div>
-        <label htmlFor="editTitle">Enter new name:</label>
+        <label htmlFor="editTitle">Edit name:</label>
         <input
           placeholder="Enter new title..."
           id="editTitle"
           type="text"
           required
-          value={props.editedItem.name}
-          onChange={handleEditInputChange}
+          value={newTitle}
+          onChange={nameHandler}
         />
-        {/* <label htmlFor="description">edit Item description:</label>
+        <label htmlFor="editDescription">Edit description:</label>
         <textarea
-          placeholder="Enter description..."
-          id="description"
+          placeholder="Enter new description..."
+          id="editDescription"
           required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        /> */}
+          value={newDesc}
+          onChange={descHandler}
+        />
       </div>
       <div>
-        {/* <label htmlFor="price">edit Price:</label>
+        <label htmlFor="editPrice">Edit price:</label>
         <input
-          placeholder="Enter price..."
+          placeholder="Enter new price..."
           autoComplete="off"
           type="number"
-          name="price"
-          id="price"
+          name="editPrice"
+          id="editPrice"
           step="0.01"
-          onChange={(e) => setPrice(+e.target.value)}
+          onChange={priceHandler}
           onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
           onFocus={(e) => resetInput(e)}
-          // value={price}
+          value={newPrice}
         />
-        <label htmlFor="category">edit Item category:</label>
+        <label htmlFor="editCategory">Edit category:</label>
         <select
-          id="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          id="editCategory"
+          value={newCategory}
+          onChange={categoryHandler}
         >
           {props.categories.slice(1).map((option, index) => (
             <option key={index} value={option}>
               {option}
             </option>
           ))}
-        </select> */}
-
-        <button type="submit">save item</button>
+        </select>
+        <div className="buttons-container">
+        <button type="submit">Update</button>
+        <button onClick={cancelEditHandler}>Cancel</button>
+        </div>
+        
       </div>
     </FormWrap>
   );

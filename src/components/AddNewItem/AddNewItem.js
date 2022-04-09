@@ -7,8 +7,9 @@ const FormWrap = styled.form`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 24px;
   div {
-    padding: 16px;
+    padding: 16px 16px 0 16px;
     width: 50%;
     display: flex;
     flex-direction: column;
