@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddNewItem from "./components/AddNewItem/AddNewItem";
+import EditNewItem from "./components/EditNewItem/EditNewItem";
 import FullList from "./components/FullList/FullList";
 import SideMenu from "./components/SideMenu/SideMenu";
 
@@ -109,6 +110,35 @@ const App = () => {
     return activeCategories.includes(el.category);
   });
 
+  // EDITHANDLER2
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentTodo, setCurrentTodo] = useState({});
+
+  function handleEditInputChange(e) {
+    // console.log(e.target);
+    setCurrentTodo({ ...currentTodo, name: e.target.value });
+    // console.log(currentTodo);
+  }
+
+  function handleEditClick(todo) {
+    setIsEditing(true);
+    setCurrentTodo({ ...todo });
+  }
+
+  function handleUpdateTodo(id, updatedTodo) {
+    const updatedItem = fullList.map((todo) => {
+      return todo.id === id ? updatedTodo : todo;
+    });
+    setIsEditing(false);
+    setFullList(updatedItem);
+  }
+
+  function handleEditFormSubmit(e) {
+    handleUpdateTodo(currentTodo.id, currentTodo);
+  }
+
+  // console.log(currentTodo);
+
   return (
     <InitialWrapper>
       <div>
@@ -117,19 +147,32 @@ const App = () => {
           Total {fullList.length} {fullList.length > 1 ? "items" : "item"}
         </p>
       </div>
-      <AddNewItem
-        addNewItem={addNewListItemHandler}
-        categories={categoriesList}
-      />
+      {isEditing ? (
+        <EditNewItem
+          handleEditInputChange={handleEditInputChange}
+          currentTodo={currentTodo}
+          handleEditFormSubmit={handleEditFormSubmit}
+          categories={categoriesList}
+        />
+      ) : (
+        <AddNewItem
+          addNewItem={addNewListItemHandler}
+          categories={categoriesList}
+        />
+      )}
       <MainContentWrapper>
         <div>
-          <FullList dataList={filterFullList} deleteItem={deleteItemHandler} />
+          <FullList
+            dataList={filterFullList}
+            deleteItem={deleteItemHandler}
+            handleEditClick={handleEditClick}
+          />
         </div>
         <SideMenu
-            checkStatus={activeCategories}
-            categoriesList={categoriesList}
-            filterCheckbox={filterCheckbox}
-          />
+          checkStatus={activeCategories}
+          categoriesList={categoriesList}
+          filterCheckbox={filterCheckbox}
+        />
       </MainContentWrapper>
     </InitialWrapper>
   );

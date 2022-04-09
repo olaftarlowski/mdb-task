@@ -59,8 +59,15 @@ const FullList = (props) => {
         <tbody>
           {props.dataList.map((item, index) => {
             return (
-              <tr key={index} onClick={() => props.deleteItem(item.id)}>
-                <td>{index}</td>
+              <tr key={index}>
+                <td>
+                  <button onClick={() => props.handleEditClick(item)}>
+                    EDIT
+                  </button>
+                  <button onClick={() => props.deleteItem(item.id)}>
+                    remove
+                  </button>
+                </td>
                 <td>{item.name}</td>
                 <td>{item.desc}</td>
                 <td>{item.category}</td>
