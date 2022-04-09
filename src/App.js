@@ -21,9 +21,17 @@ const InitialWrapper = styled.div`
 `;
 const MainContentWrapper = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  /* justify-content: center; */
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 4px;
+  grid-row-gap: 0px;
+
+  > div {
+    display: flex;
+    justify-content: center;
+    padding: 0 64px;
+  }
 `;
 
 const getLocalStorage = () => {
@@ -114,12 +122,14 @@ const App = () => {
         categories={categoriesList}
       />
       <MainContentWrapper>
-        <FullList dataList={filterFullList} deleteItem={deleteItemHandler} />
+        <div>
+          <FullList dataList={filterFullList} deleteItem={deleteItemHandler} />
+        </div>
         <SideMenu
-          checkStatus={activeCategories}
-          categoriesList={categoriesList}
-          filterCheckbox={filterCheckbox}
-        />
+            checkStatus={activeCategories}
+            categoriesList={categoriesList}
+            filterCheckbox={filterCheckbox}
+          />
       </MainContentWrapper>
     </InitialWrapper>
   );

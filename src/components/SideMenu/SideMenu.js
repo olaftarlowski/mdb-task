@@ -1,17 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 const SideMenuWrapper = styled.aside`
-  text-align: start;
-  width: 20%;
-  padding: 4px;
-  border: 2px solid red;
+  background-color: #4a4a4a;
+  text-align: left;
+  height: fit-content;
+  padding: 24px 0 100px 12px;
+  border: 1px solid #adadad;
+
+  input {
+    margin: 0 6px;
+    width: 20px;
+    height: 20px;
+  }
+
+  label {
+    padding: 0 6px;
+    text-transform: capitalize;
+  }
 `;
 
 const SideMenu = (props) => {
   const isIn = props.checkStatus;
-//   console.log(isIn);
+  //   console.log(isIn);
   return (
     <SideMenuWrapper>
+      <span>Categories</span>
       {props.categoriesList.map((itemName, index) => {
         return (
           <div key={index}>
