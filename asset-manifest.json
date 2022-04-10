@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/mdb-task/static/css/main.497038bf.css",
+    "main.js": "/mdb-task/static/js/main.de257f7f.js",
+    "index.html": "/mdb-task/index.html",
+    "main.497038bf.css.map": "/mdb-task/static/css/main.497038bf.css.map",
+    "main.de257f7f.js.map": "/mdb-task/static/js/main.de257f7f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.497038bf.css",
+    "static/js/main.de257f7f.js"
+  ]
+}
