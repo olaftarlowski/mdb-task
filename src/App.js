@@ -3,6 +3,7 @@ import styled from "styled-components";
 import AddNewItem from "./components/AddNewItem/AddNewItem";
 import EditItem from "./components/EditItem/EditItem";
 import FullList from "./components/FullList/FullList";
+import FullListStatus from "./components/FullListStatus/FullListStatus";
 import SideMenu from "./components/SideMenu/SideMenu";
 import GlobalStyle from "./theme/GlobalStyle";
 
@@ -16,9 +17,10 @@ const InitialWrapper = styled.div`
   font-size: 1.6em;
   color: white;
 
-  p {
-    display: inline-block;
-    margin: 0;
+  .status-section {
+    display: flex;
+    flex-direction: row;
+    margin: 24px 0 48px;
   }
 `;
 const MainContentWrapper = styled.div`
@@ -58,21 +60,12 @@ const App = () => {
       return categoriesList.includes(el.category);
     })
   );
-  const [totalPrice, setTotalPrice] = useState(0);
-
   const [activeCategories, setActiveCategories] = useState(["all"]);
   const [isEditing, setIsEditing] = useState(false);
   const [editedItem, setEditedItem] = useState({});
 
-  const countTotalPrice = (arr) =>
-    arr.reduce(
-      (previousValue, currentValue) => previousValue + +currentValue.price,
-      0
-    );
-
   useEffect(() => {
     localStorage.setItem("dataList", JSON.stringify(fullList));
-    setTotalPrice(countTotalPrice(fullList).toFixed(2));
   }, [fullList]);
 
   const addNewListItemHandler = (props) => {
@@ -129,27 +122,24 @@ const App = () => {
   return (
     <InitialWrapper>
       <GlobalStyle />
-      <div>
-        <p>Total price: {totalPrice}$</p>
-        <p>
-          Total {fullList.length} {fullList.length > 1 ? "items" : "item"}
-        </p>
-      </div>
-      {isEditing ? (
-        <EditItem
-          setNewEditedItem={setEditedItem}
-          setEditing={setIsEditing}
-          setFullList={setFullList}
-          fullList={fullList}
-          editedItem={editedItem}
-          categories={categoriesList}
-        />
-      ) : (
-        <AddNewItem
-          addNewItem={addNewListItemHandler}
-          categories={categoriesList}
-        />
-      )}
+      <section className="status-section">
+        {isEditing ? (
+          <EditItem
+            setNewEditedItem={setEditedItem}
+            setEditing={setIsEditing}
+            setFullList={setFullList}
+            fullList={fullList}
+            editedItem={editedItem}
+            categories={categoriesList}
+          />
+        ) : (
+          <AddNewItem
+            addNewItem={addNewListItemHandler}
+            categories={categoriesList}
+          />
+        )}
+        <FullListStatus fullListData={fullList} />
+      </section>
       <MainContentWrapper>
         <div>
           <FullList
