@@ -19,6 +19,18 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
 
+  :disabled {
+    cursor: not-allowed;
+    color: #8f8f8f;
+    background-color: #616161;
+
+    :hover {
+      color: #8f8f8f;
+      background-color: #616161;
+      border-color: #616161;
+    }
+  }
+
   :hover {
     background-color: #218838;
     border-color: #1e7e34;

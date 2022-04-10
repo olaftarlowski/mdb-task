@@ -1,3 +1,4 @@
+import exportFromJSON from "export-from-json";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AddNewItem from "./components/AddNewItem/AddNewItem";
@@ -6,6 +7,7 @@ import FullList from "./components/FullList/FullList";
 import FullListStatus from "./components/FullListStatus/FullListStatus";
 import SideMenu from "./components/SideMenu/SideMenu";
 import GlobalStyle from "./theme/GlobalStyle";
+import Button from "./UI/Button";
 
 const FullContentWrapper = styled.div`
   text-align: center;
@@ -142,6 +144,15 @@ const App = () => {
     }
   };
 
+  // export CSV
+  const data = fullList;
+  const fileName = "downloadedFullList";
+  const exportType = exportFromJSON.types.csv;
+
+  const exportData = () => {
+    exportFromJSON({ data, fileName, exportType });
+  };
+
   const filterFullList = fullList.filter((el) => {
     if (activeCategories.includes("all")) {
       return el;
@@ -186,6 +197,13 @@ const App = () => {
           filterCheckbox={filterCheckbox}
         />
       </MainContentWrapper>
+      <Button
+        disabled={fullList.length === 0 ? true : false}
+        edit
+        onClick={exportData}
+      >
+        Download CSV
+      </Button>
     </FullContentWrapper>
   );
 };
