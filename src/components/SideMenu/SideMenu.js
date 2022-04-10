@@ -43,13 +43,17 @@ const SideMenu = (props) => {
   const [newCategory, setNewCategory] = useState("");
   const submitNewCategoryHandler = (e) => {
     e.preventDefault();
-    if (newCategory === "") {
+    if (
+      newCategory === "" ||
+      props.categoriesList.includes(newCategory.toLowerCase())
+    ) {
       return;
     }
-    console.log(newCategory);
+
     props.newCategoryItem((prevState) => {
-      return [...prevState, newCategory];
+      return [...prevState, newCategory.toLowerCase()];
     });
+    setNewCategory("");
   };
   const isIn = props.checkStatus;
 
@@ -81,6 +85,7 @@ const SideMenu = (props) => {
             name="addCategory"
             type="text"
             autoComplete="off"
+            value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
           />
           <Button type="submit">Add category</Button>
