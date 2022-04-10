@@ -69,14 +69,18 @@ const AddNewItem = (props) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("component");
   const [price, setPrice] = useState(0);
-  const [symbolsArr] = useState(["e", "E", "+", "-"]);
+  const [symbolsArr] = useState(["e", "E", "+", "-", "."]);
+  const regexPrice = /^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/;
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // if (price <= 0) {
-    //     console.log('is price 0 ?');
-    //     return;
-    // }
+    if (price <= 0) {
+      alert("The price must be greater than 0.");
+      return;
+    } else if (regexPrice.test(price)) {
+      alert("The price must not have more than 2 decimal places.");
+      return;
+    }
     const newListItem = {
       id: uuid(),
       name: title,
@@ -85,6 +89,10 @@ const AddNewItem = (props) => {
       price: price,
     };
     props.addNewItem(newListItem);
+    setTitle("");
+    setDescription("");
+    setCategory("component");
+    setPrice(0);
   };
 
   const resetInput = (e) => {
@@ -126,7 +134,7 @@ const AddNewItem = (props) => {
           onChange={(e) => setPrice(+e.target.value)}
           onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
           onFocus={(e) => resetInput(e)}
-          // value={price}
+          value={price}
         />
         <label htmlFor="category">Item category:</label>
         <select

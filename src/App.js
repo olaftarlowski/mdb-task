@@ -104,6 +104,27 @@ const App = () => {
     setFullList((prevState) => {
       return [...prevState, props];
     });
+
+    // sample code, required steps:
+    // install json-server package
+    // creating local db.json file and there items{},
+    // running this server on diffrent port
+    // changing this function to async/await
+    // **************************************************
+    // await fetch("http://localhost:8000/items/", {
+    //   method: "POST",
+    //   body: JSON.stringify(newListItem),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log("Success:", data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
 
   const deleteItemHandler = (itemId) => {
