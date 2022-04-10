@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/mdb-task/static/css/main.497038bf.css",
-    "main.js": "/mdb-task/static/js/main.de257f7f.js",
+    "main.js": "/mdb-task/static/js/main.bfb683b0.js",
     "index.html": "/mdb-task/index.html",
     "main.497038bf.css.map": "/mdb-task/static/css/main.497038bf.css.map",
-    "main.de257f7f.js.map": "/mdb-task/static/js/main.de257f7f.js.map"
+    "main.bfb683b0.js.map": "/mdb-task/static/js/main.bfb683b0.js.map"
   },
   "entrypoints": [
     "static/css/main.497038bf.css",
-    "static/js/main.de257f7f.js"
+    "static/js/main.bfb683b0.js"
   ]
 }
