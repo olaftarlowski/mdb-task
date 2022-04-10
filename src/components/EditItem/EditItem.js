@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../UI/Button";
 
@@ -40,13 +40,19 @@ const FormWrap = styled.form`
 
 const EditItem = (props) => {
   const [currentItem, setCurrentItem] = useState({ ...props.editedItem });
-
-  const [newTitle, setNewTitle] = useState(currentItem.name);
-  const [newDesc, setNewDesc] = useState(currentItem.desc);
-  const [newPrice, setNewPrice] = useState(currentItem.price);
-  const [newCategory, setNewCategory] = useState(currentItem.category);
-
+  const [newTitle, setNewTitle] = useState("");
+  const [newDesc, setNewDesc] = useState("");
+  const [newPrice, setNewPrice] = useState(0);
+  const [newCategory, setNewCategory] = useState("");
   const [symbolsArr] = useState(["e", "E", "+", "-"]);
+
+  useEffect(() => {
+    setCurrentItem({ ...props.editedItem });
+    setNewTitle({ ...props.editedItem }.name);
+    setNewDesc({ ...props.editedItem }.desc);
+    setNewPrice({ ...props.editedItem }.price);
+    setNewCategory({ ...props.editedItem }.category);
+  }, [props.editedItem]);
 
   const nameHandler = (e) => {
     const updatedTitle = e.target.value;
@@ -144,10 +150,11 @@ const EditItem = (props) => {
           ))}
         </select>
         <div className="buttons-container">
-        <Button type="submit">Update</Button>
-        <Button danger onClick={cancelEditHandler}>Cancel</Button>
+          <Button type="submit">Update</Button>
+          <Button danger onClick={cancelEditHandler}>
+            Cancel
+          </Button>
         </div>
-        
       </div>
     </FormWrap>
   );
