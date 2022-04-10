@@ -53,6 +53,8 @@ const App = () => {
     //  setCategoriesList
   ] = useState(["all", "component", "software", "device", "other"]);
   const [activeCategories, setActiveCategories] = useState(["all"]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedItem, setEditedItem] = useState({});
 
   const countTotalPrice = (arr) =>
     arr.reduce(
@@ -72,10 +74,15 @@ const App = () => {
   };
 
   const deleteItemHandler = (itemId) => {
+    setIsEditing(false);
     setFullList((currentList) => {
       const updatedList = currentList.filter((item) => item.id !== itemId);
       return updatedList;
     });
+  };
+  const handleEditClick = (item) => {
+    setIsEditing(true);
+    setEditedItem({ ...item });
   };
 
   const filterCheckbox = (checkbox) => {
@@ -111,39 +118,9 @@ const App = () => {
     return activeCategories.includes(el.category);
   });
 
-  // EDITHANDLER2
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedItem, setEditedItem] = useState({});
-
-  // function handleEditInputChange(e) {
-  //   // console.log(e.target);
-  //   setEditedItem({ ...editedItem, name: e.target.value });
-  //   // console.log(editedItem);
-  // }
-
-  // this goes to the FullList compo
-  function handleEditClick(item) {
-    setIsEditing(true);
-    setEditedItem({ ...item });
-  }
-
-  // function handleUpdateItem(id, editItem) {
-  //   const updatedItem = fullList.map((item) => {
-  //     return item.id === id ? editItem : item;
-  //   });
-  //   setIsEditing(false);
-  //   setFullList(updatedItem);
-  // }
-
-  // function handleEditFormSubmit() {
-  //   handleUpdateItem(editedItem.id, editedItem);
-  // }
-
-  // console.log(editedItem);
-
   return (
     <InitialWrapper>
-      <GlobalStyle/>
+      <GlobalStyle />
       <div>
         <p>Total price: {totalPrice}$</p>
         <p>
