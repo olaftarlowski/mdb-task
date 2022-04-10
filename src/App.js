@@ -46,12 +46,20 @@ const getLocalStorage = () => {
 };
 
 const App = () => {
-  const [fullList, setFullList] = useState(getLocalStorage());
+  const [categoriesList, setCategoriesList] = useState([
+    "all",
+    "component",
+    "software",
+    "device",
+    "other",
+  ]);
+  const [fullList, setFullList] = useState(
+    getLocalStorage().filter((el) => {
+      return categoriesList.includes(el.category);
+    })
+  );
   const [totalPrice, setTotalPrice] = useState(0);
-  const [
-    categoriesList,
-    //  setCategoriesList
-  ] = useState(["all", "component", "software", "device", "other"]);
+
   const [activeCategories, setActiveCategories] = useState(["all"]);
   const [isEditing, setIsEditing] = useState(false);
   const [editedItem, setEditedItem] = useState({});
@@ -151,6 +159,7 @@ const App = () => {
           />
         </div>
         <SideMenu
+          newCategoryItem={setCategoriesList}
           checkStatus={activeCategories}
           categoriesList={categoriesList}
           filterCheckbox={filterCheckbox}
