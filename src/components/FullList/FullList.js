@@ -36,7 +36,6 @@ const Table = styled.table`
     border: 1px solid #282c34;
   }
 
-
   td {
     padding: 2px 8px;
     border: 1px solid #282c34;
@@ -50,6 +49,31 @@ const Table = styled.table`
 
   tr:nth-of-type(even) {
     background-color: #ebebeb;
+  }
+
+  @media (max-width: 900px) {
+    .title {
+      width: 220px;
+    }
+    .desc {
+      width: 360px;
+    }
+    .cat {
+      width: 125px;
+    }
+    .price {
+      width: 110px;
+    }
+    .controls {
+      width: 85px;
+    }
+
+    td {
+      padding: 1px 4px;
+      div {
+        flex-direction: column;
+      }
+    }
   }
 `;
 

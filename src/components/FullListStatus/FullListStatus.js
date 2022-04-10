@@ -23,12 +23,20 @@ const StatusWrapper = styled.div`
     span {
       max-width: 140px;
       word-wrap: break-word;
-      /* text-overflow: ellipsis; */
     }
   }
   p {
     display: block;
     margin: 4px 0;
+    word-wrap: break-word;
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+
+    div > span {
+      max-width: 80px;
+    }
   }
 `;
 

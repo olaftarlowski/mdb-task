@@ -7,7 +7,7 @@ import FullListStatus from "./components/FullListStatus/FullListStatus";
 import SideMenu from "./components/SideMenu/SideMenu";
 import GlobalStyle from "./theme/GlobalStyle";
 
-const InitialWrapper = styled.div`
+const FullContentWrapper = styled.div`
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
@@ -17,10 +17,26 @@ const InitialWrapper = styled.div`
   font-size: 1.6em;
   color: white;
 
+  h1 {
+    font-size: 3em;
+  }
+
   .status-section {
     display: flex;
     flex-direction: row;
+    align-items: center;
     margin: 24px 0 48px;
+
+    @media (max-width: 900px) {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 400px) {
+    h1 {
+      font-size: 2.2em;
+    }
   }
 `;
 const MainContentWrapper = styled.div`
@@ -35,6 +51,20 @@ const MainContentWrapper = styled.div`
     display: flex;
     justify-content: center;
     padding: 0 32px;
+  }
+
+  @media (max-width: 1200px) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  @media (max-width: 900px) {
+    > div {
+      overflow-x: scroll;
+      display: block;
+      justify-content: center;
+      padding: 0;
+    }
   }
 `;
 
@@ -120,7 +150,8 @@ const App = () => {
   });
 
   return (
-    <InitialWrapper>
+    <FullContentWrapper>
+      <h1>PC &amp; Workstation Builder</h1>
       <GlobalStyle />
       <section className="status-section">
         {isEditing ? (
@@ -155,7 +186,7 @@ const App = () => {
           filterCheckbox={filterCheckbox}
         />
       </MainContentWrapper>
-    </InitialWrapper>
+    </FullContentWrapper>
   );
 };
 

@@ -9,6 +9,7 @@ const FormWrap = styled.form`
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 24px;
+
   .buttons-container {
     width: 236px;
   }
@@ -33,6 +34,33 @@ const FormWrap = styled.form`
     height: 30px;
     font-size: 24px;
     cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+
+    label {
+      font-size: 1.3em;
+      margin: 4px 0;
+    }
+
+    input,
+    select,
+    textarea {
+      margin: 0 auto;
+      width: 90%;
+      max-width: none;
+    }
+    .buttons-container {
+      margin: 0 auto;
+    }
+
+    > div {
+      padding: 2px;
+      width: 100%;
+    }
   }
 `;
 

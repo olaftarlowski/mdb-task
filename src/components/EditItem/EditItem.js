@@ -22,19 +22,51 @@ const FormWrap = styled.form`
     height: 100%;
   }
   input {
+    border: 1px solid #9cff9d;
+    background-color: #baffbb;
     max-width: 260px;
     height: 30px;
     font-size: 24px;
   }
   textarea {
+    border: 1px solid #9cff9d;
+    background-color: #baffbb;
     height: 100px;
     font-size: 20px;
   }
   select {
+    border: 1px solid #9cff9d;
+    background-color: #baffbb;
     width: 100%;
     height: 30px;
     font-size: 24px;
     cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+
+    label {
+      margin: 4px 0;
+    }
+
+    input,
+    select,
+    textarea {
+      margin: 0 auto;
+      width: 90%;
+      max-width: none;
+    }
+    .buttons-container {
+      margin: 0 auto;
+    }
+
+    > div {
+      padding: 2px;
+      width: 100%;
+    }
   }
 `;
 

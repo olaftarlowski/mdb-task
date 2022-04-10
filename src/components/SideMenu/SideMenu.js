@@ -9,7 +9,7 @@ const SideMenuWrapper = styled.aside`
   padding: 24px 12px 100px 12px;
   border: 1px solid #adadad;
 
-  h3 {
+  h2 {
     font-size: 1.2em;
     margin: 6px 0;
   }
@@ -37,6 +37,36 @@ const SideMenuWrapper = styled.aside`
       font-size: 24px;
     }
   }
+
+  @media (max-width: 1200px) {
+    width: 80%;
+    margin: 12px auto;
+    padding: 12px;
+
+    div.all-categories {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin: 8px 0;
+
+      div {
+        margin: 4px;
+      }
+    }
+    div.new-category {
+      max-width: 50%;
+    }
+  }
+  @media (max-width: 600px) {
+    h2 {
+      font-size: 1.5em;
+      margin: 12px 0;
+    }
+    div.new-category {
+      max-width: 100%;
+    }
+  }
 `;
 
 const SideMenu = (props) => {
@@ -59,8 +89,8 @@ const SideMenu = (props) => {
 
   return (
     <SideMenuWrapper>
-      <h3>Categories</h3>
-      <div>
+      <h2>Categories</h2>
+      <div className="all-categories">
         {props.categoriesList.map((itemName, index) => {
           return (
             <div key={index}>
@@ -77,8 +107,8 @@ const SideMenu = (props) => {
           );
         })}
       </div>
-      <div>
-        <h3>Add category</h3>
+      <div className="new-category">
+        <h2>Add category</h2>
         <form onSubmit={submitNewCategoryHandler}>
           <label htmlFor="addCategory"></label>
           <input
