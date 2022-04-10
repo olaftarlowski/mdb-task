@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { v4 as uuid } from "uuid";
 import styled from "styled-components";
 
@@ -43,29 +43,20 @@ const FormWrap = styled.form`
 `;
 
 const EditItem = (props) => {
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [category, setCategory] = useState("component");
-  // const [price, setPrice] = useState(0);
+  const [currentItem, setCurrentItem] = useState({ ...props.editedItem });
+  const [newTitle, setNewTitle] = useState("");
+  const [newDesc, setNewDesc] = useState("");
+  const [newPrice, setNewPrice] = useState(0);
+  const [newCategory, setNewCategory] = useState("");
   const [symbolsArr] = useState(["e", "E", "+", "-"]);
 
-  // const submitEditHandler = (e) => {
-  //   e.preventDefault();
-  //   // const newListItem = {
-  //   //   id: uuid(),
-  //   //   name: title,
-  //   //   desc: description,
-  //   //   category: category,
-  //   //   price: price,
-  //   // };
-  //   props.handleEditFormSubmit();
-  // };
-  const [currentItem, setCurrentItem] = useState({ ...props.editedItem });
-
-  const [newTitle, setNewTitle] = useState(currentItem.name);
-  const [newDesc, setNewDesc] = useState(currentItem.desc);
-  const [newPrice, setNewPrice] = useState(currentItem.price);
-  const [newCategory, setNewCategory] = useState(currentItem.category);
+  useEffect(() => {
+    setCurrentItem({ ...props.editedItem });
+    setNewTitle({ ...props.editedItem }.name);
+    setNewDesc({ ...props.editedItem }.desc);
+    setNewPrice({ ...props.editedItem }.price);
+    setNewCategory({ ...props.editedItem }.category);
+  }, [props.editedItem]);
 
   const nameHandler = (e) => {
     const updatedTitle = e.target.value;
@@ -163,10 +154,9 @@ const EditItem = (props) => {
           ))}
         </select>
         <div className="buttons-container">
-        <button type="submit">Update</button>
-        <button onClick={cancelEditHandler}>Cancel</button>
+          <button type="submit">Update</button>
+          <button onClick={cancelEditHandler}>Cancel</button>
         </div>
-        
       </div>
     </FormWrap>
   );
