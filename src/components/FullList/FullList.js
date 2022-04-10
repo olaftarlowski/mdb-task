@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../../UI/Button";
 
 const Table = styled.table`
   max-width: 1100px;
@@ -6,16 +7,12 @@ const Table = styled.table`
   width: 100%;
   background-color: #ffffff;
   border-collapse: collapse;
-  border-width: 1px;
-  border-color: #0a0800;
-  border-style: solid;
+  border: 1px solid #282c34;
   color: #000;
   word-wrap: break-word;
   table-layout: fixed;
+  text-align: left;
 
-  .idx {
-    width: 10%;
-  }
   .title {
     width: 20%;
   }
@@ -23,23 +20,36 @@ const Table = styled.table`
     width: 40%;
   }
   .cat {
-    width: 20%;
+    width: 18%;
   }
   .price {
-    width: 10%;
+    width: 13%;
+  }
+  .controls {
+    width: 12%;
   }
 
-  td,
   th {
-    border-width: 1px;
-    border-color: #0a0800;
-    border-style: solid;
-    padding: 6px;
-    text-overflow: ellipsis;
+    background-color: #dbdbdb;
+    font-size: 1.1em;
+    padding: 8px 12px;
+    border: 1px solid #282c34;
   }
 
-  thead {
-    background-color: #fff;
+
+  td {
+    padding: 2px 8px;
+    border: 1px solid #282c34;
+    text-transform: capitalize;
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  tr:nth-of-type(even) {
+    background-color: #ebebeb;
   }
 `;
 
@@ -49,29 +59,31 @@ const FullList = (props) => {
       <Table>
         <thead>
           <tr>
-            <th className="idx">Index</th>
             <th className="title">Title</th>
             <th className="desc">Description</th>
             <th className="cat">Category</th>
-            <th className="price">Price ($)</th>
+            <th className="price">Price($)</th>
+            <th className="controls"></th>
           </tr>
         </thead>
         <tbody>
           {props.dataList.map((item, index) => {
             return (
               <tr key={index}>
-                <td>
-                  <button onClick={() => props.handleEditClick(item)}>
-                    EDIT
-                  </button>
-                  <button onClick={() => props.deleteItem(item.id)}>
-                    remove
-                  </button>
-                </td>
                 <td>{item.name}</td>
                 <td>{item.desc}</td>
                 <td>{item.category}</td>
                 <td>{item.price}</td>
+                <td>
+                  <div>
+                    <Button edit onClick={() => props.handleEditClick(item)}>
+                      <span className={"material-icons"}>mode_edit</span>
+                    </Button>
+                    <Button danger onClick={() => props.deleteItem(item.id)}>
+                      <span className={"material-icons"}>delete</span>
+                    </Button>
+                  </div>
+                </td>
               </tr>
             );
           })}

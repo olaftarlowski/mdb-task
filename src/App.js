@@ -4,6 +4,7 @@ import AddNewItem from "./components/AddNewItem/AddNewItem";
 import EditItem from "./components/EditItem/EditItem";
 import FullList from "./components/FullList/FullList";
 import SideMenu from "./components/SideMenu/SideMenu";
+import GlobalStyle from "./theme/GlobalStyle";
 
 const InitialWrapper = styled.div`
   text-align: center;
@@ -31,7 +32,7 @@ const MainContentWrapper = styled.div`
   > div {
     display: flex;
     justify-content: center;
-    padding: 0 64px;
+    padding: 0 32px;
   }
 `;
 
@@ -142,6 +143,7 @@ const App = () => {
 
   return (
     <InitialWrapper>
+      <GlobalStyle/>
       <div>
         <p>Total price: {totalPrice}$</p>
         <p>

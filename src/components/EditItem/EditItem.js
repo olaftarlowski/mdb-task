@@ -1,6 +1,6 @@
 import { useState } from "react";
-// import { v4 as uuid } from "uuid";
 import styled from "styled-components";
+import Button from "../../UI/Button";
 
 const FormWrap = styled.form`
   display: flex;
@@ -36,36 +36,17 @@ const FormWrap = styled.form`
     font-size: 24px;
     cursor: pointer;
   }
-  button {
-    margin: 14px auto;
-    font-size: 24px;
-  }
 `;
 
 const EditItem = (props) => {
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [category, setCategory] = useState("component");
-  // const [price, setPrice] = useState(0);
-  const [symbolsArr] = useState(["e", "E", "+", "-"]);
-
-  // const submitEditHandler = (e) => {
-  //   e.preventDefault();
-  //   // const newListItem = {
-  //   //   id: uuid(),
-  //   //   name: title,
-  //   //   desc: description,
-  //   //   category: category,
-  //   //   price: price,
-  //   // };
-  //   props.handleEditFormSubmit();
-  // };
   const [currentItem, setCurrentItem] = useState({ ...props.editedItem });
 
   const [newTitle, setNewTitle] = useState(currentItem.name);
   const [newDesc, setNewDesc] = useState(currentItem.desc);
   const [newPrice, setNewPrice] = useState(currentItem.price);
   const [newCategory, setNewCategory] = useState(currentItem.category);
+
+  const [symbolsArr] = useState(["e", "E", "+", "-"]);
 
   const nameHandler = (e) => {
     const updatedTitle = e.target.value;
@@ -163,8 +144,8 @@ const EditItem = (props) => {
           ))}
         </select>
         <div className="buttons-container">
-        <button type="submit">Update</button>
-        <button onClick={cancelEditHandler}>Cancel</button>
+        <Button type="submit">Update</Button>
+        <Button danger onClick={cancelEditHandler}>Cancel</Button>
         </div>
         
       </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import styled from "styled-components";
+import Button from "../../UI/Button";
 
 const FormWrap = styled.form`
   display: flex;
@@ -8,6 +9,9 @@ const FormWrap = styled.form`
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 24px;
+  .buttons-container {
+    width: 236px;
+  }
   div {
     padding: 16px 16px 0 16px;
     width: 50%;
@@ -29,10 +33,6 @@ const FormWrap = styled.form`
     height: 30px;
     font-size: 24px;
     cursor: pointer;
-  }
-  button {
-    margin: 14px auto;
-    font-size: 24px;
   }
 `;
 
@@ -112,8 +112,9 @@ const AddNewItem = (props) => {
             </option>
           ))}
         </select>
-
-        <button type="submit">Add item</button>
+        <div className="buttons-container">
+          <Button type="submit">Add item</Button>
+        </div>
       </div>
     </FormWrap>
   );
