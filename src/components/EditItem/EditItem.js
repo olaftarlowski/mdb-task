@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../UI/Button";
+import CurrencyInput from "react-currency-input-field";
 
 const FormWrap = styled.form`
   display: flex;
@@ -76,7 +77,6 @@ const EditItem = (props) => {
   const [newDesc, setNewDesc] = useState("");
   const [newPrice, setNewPrice] = useState(0);
   const [newCategory, setNewCategory] = useState("");
-  const [symbolsArr] = useState(["e", "E", "+", "-"]);
 
   useEffect(() => {
     setCurrentItem({ ...props.editedItem });
@@ -98,8 +98,8 @@ const EditItem = (props) => {
     const updatedEditInput = { ...currentItem, desc: updatedDesc };
     setCurrentItem(updatedEditInput);
   };
-  const priceHandler = (e) => {
-    const updatedPrice = +e.target.value;
+  const priceHandler = (value) => {
+    const updatedPrice = value;
     setNewPrice(updatedPrice);
     const updatedEditInput = { ...currentItem, price: updatedPrice };
     setCurrentItem(updatedEditInput);
@@ -126,13 +126,16 @@ const EditItem = (props) => {
 
   function handleEditFormSubmit(e) {
     e.preventDefault();
+    const currentPrice = currentItem.price;
+    if (currentPrice < 0) {
+      alert("The price must be greater than 0.");
+      return;
+    }
+    if (currentPrice.endsWith(".")) {
+      currentItem.price = currentPrice.slice(0, -1);
+    }
     handleUpdateItem(currentItem.id, currentItem);
   }
-  const resetInput = (e) => {
-    if (newPrice === 0) {
-      e.target.value = "";
-    }
-  };
 
   return (
     <FormWrap onSubmit={handleEditFormSubmit}>
@@ -157,17 +160,17 @@ const EditItem = (props) => {
       </div>
       <div>
         <label htmlFor="editPrice">Edit price:</label>
-        <input
-          placeholder="Enter new price..."
+        <CurrencyInput
+          id="price"
+          name="price"
           autoComplete="off"
-          type="number"
-          name="editPrice"
-          id="editPrice"
-          step="0.01"
-          onChange={priceHandler}
-          onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
-          onFocus={(e) => resetInput(e)}
+          placeholder="Please enter a number"
+          defaultValue={newPrice}
           value={newPrice}
+          decimalsLimit={2}
+          step={1}
+          decimalSeparator="."
+          onValueChange={priceHandler}
         />
         <label htmlFor="editCategory">Edit category:</label>
         <select

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import styled from "styled-components";
 import Button from "../../UI/Button";
+import CurrencyInput from "react-currency-input-field";
 
 const FormWrap = styled.form`
   display: flex;
@@ -69,16 +70,11 @@ const AddNewItem = (props) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("component");
   const [price, setPrice] = useState(0);
-  const [symbolsArr] = useState(["e", "E", "+", "-", "."]);
-  const regexPrice = /^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/;
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (price <= 0) {
       alert("The price must be greater than 0.");
-      return;
-    } else if (regexPrice.test(price)) {
-      alert("The price must not have more than 2 decimal places.");
       return;
     }
     const newListItem = {
@@ -88,17 +84,14 @@ const AddNewItem = (props) => {
       category: category,
       price: price,
     };
+    if (newListItem.price.endsWith(".")) {
+      newListItem.price = newListItem.price.slice(0, -1);
+    }
     props.addNewItem(newListItem);
     setTitle("");
     setDescription("");
     setCategory("component");
     setPrice(0);
-  };
-
-  const resetInput = (e) => {
-    if (price === 0) {
-      e.target.value = "";
-    }
   };
 
   return (
@@ -124,17 +117,19 @@ const AddNewItem = (props) => {
       </div>
       <div>
         <label htmlFor="price">Price:</label>
-        <input
-          placeholder="Enter price..."
-          autoComplete="off"
-          type="number"
-          name="price"
+        <CurrencyInput
           id="price"
-          step="0.01"
-          onChange={(e) => setPrice(+e.target.value)}
-          onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
-          onFocus={(e) => resetInput(e)}
+          name="price"
+          autoComplete="off"
+          placeholder="Please enter a number"
+          defaultValue={price}
           value={price}
+          decimalsLimit={2}
+          step={1}
+          decimalSeparator="."
+          onValueChange={(value) => {
+            setPrice(value);
+          }}
         />
         <label htmlFor="category">Item category:</label>
         <select

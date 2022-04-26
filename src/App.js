@@ -135,6 +135,7 @@ const App = () => {
     });
   };
   const handleEditClick = (item) => {
+    window.scrollTo(0, 0);
     setIsEditing(true);
     setEditedItem({ ...item });
   };
